@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eladoxx | Official Links</title>
+  <link rel="icon" href="logo.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #26d9c4;
+      --accent-dark: #1a9e8f;
+      --accent-glow: rgba(38, 217, 196, 0.35);
+      --kick: #53fc18;
+      --spotlight-color: rgba(38, 217, 196, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #050505; }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(38, 217, 196, 0.4);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(38, 217, 196, 0.8); }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background-color: #000;
+      background-image:
+        radial-gradient(circle at 50% 40%, rgba(38, 217, 196, 0.07) 0%, transparent 55%),
+        linear-gradient(135deg, #020202 0%, #001a17 50%, #020202 100%);
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      color: #fff;
+    }
+
+    #particles-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      mask-image: radial-gradient(circle at center, black 10%, transparent 85%);
+      -webkit-mask-image: radial-gradient(circle at center, black 10%, transparent 85%);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.1) 56%, rgba(0,0,0,0.88) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #watermark-bg {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 70%;
+      max-width: 420px;
+      height: auto;
+      opacity: 0.08;
+      mix-blend-mode: screen;
+      z-index: 0;
+      pointer-events: none;
+      filter: blur(1px);
+    }
+
+    #spotlight {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, var(--spotlight-color) 0%, transparent 72%);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      display: none;
+      opacity: 0.82;
+      transition: background 0.15s ease;
+    }
+
+    /* Main */
+    #main-page-content {
+      position: relative;
+      z-index: 3;
+      min-height: 100vh;
+      padding: 58px 20px 40px;
+      max-width: 520px;
+      margin: 0 auto;
+      animation: pageEnter 0.5s ease forwards;
+    }
+
+    @keyframes pageEnter {
+      from { opacity: 0; transform: translateY(18px) scale(0.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Profile */
+    #profile-image-container {
+      display: block;
+      cursor: pointer;
+      position: relative;
+      width: 136px;
+      height: 136px;
+      margin: 0 auto 20px;
+      border: 4px solid rgba(255,255,255,0.55);
+      border-radius: 50%;
+      overflow: hidden;
+      isolation: isolate;
+      transition: all 0.4s ease;
+    }
+
+    #profile-image-container::before {
+      content: "";
+      position: absolute;
+      inset: -18px;
+      background: conic-gradient(from 0deg, var(--kick), var(--accent), #5865f2, #e1306c, var(--kick));
+      animation: rotateRing 4s linear infinite;
+      z-index: -2;
+    }
+
+    #profile-image-container::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      box-shadow: inset 0 0 28px rgba(0,0,0,0.45);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    #profile-image-container:hover {
+      transform: scale(1.07) rotate(-1deg);
+      box-shadow: 0 0 42px var(--accent-glow);
+      border-color: var(--accent);
+    }
+
+    @keyframes rotateRing { to { transform: rotate(360deg); } }
+
+    #profile-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .hero-name {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      margin: 0 0 6px;
+      text-shadow: 0 0 30px rgba(38, 217, 196, 0.3);
+    }
+
+    .hero-tagline {
+      text-align: center;
+      color: rgba(255,255,255,0.45);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    /* Pill menu */
+    .pill-menu {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      background: rgba(31, 35, 48, 0.65);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 999px;
+      padding: 10px 32px;
+      margin: 0 auto 32px;
+      backdrop-filter: blur(12px);
+      width: fit-content;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .pill-btn {
+      color: rgba(255,255,255,0.4);
+      font-weight: 900;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 6px 12px;
+    }
+
+    .pill-btn.active {
+      color: #fff;
+      text-shadow: 0 0 15px rgba(255,255,255,0.4);
+    }
+
+    .pill-btn:hover:not(.active) { color: rgba(255,255,255,0.7); }
+
+    /* Cards */
+    .links-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .card {
+      position: relative;
+      z-index: 3;
+      display: block;
+      overflow: hidden;
+      border-radius: 16px;
+      padding: 5px;
+      text-decoration: none;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.02)),
+        linear-gradient(145deg, rgba(38, 217, 196, 0.1), rgba(0,0,0,0.4));
+      border: 1px solid rgba(38, 217, 196, 0.15);
+      border-left: 4px solid rgba(38, 217, 196, 0.45);
+      box-shadow: 0 18px 48px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      backdrop-filter: blur(18px);
+      cursor: pointer;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(255,255,255,0.18), transparent 34%),
+        radial-gradient(circle at 100% 100%, rgba(38, 217, 196, 0.14), transparent 35%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      top: -70%;
+      right: -45%;
+      width: 60%;
+      height: 220%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      transform: rotate(25deg);
+      transition: 0.55s ease;
+      pointer-events: none;
+    }
+
+    .card:hover {
+      border-color: rgba(38, 217, 196, 0.6);
+      border-left-color: var(--accent);
+      box-shadow: 0 26px 68px rgba(0,0,0,0.66), 0 0 38px rgba(38, 217, 196, 0.3);
+      transform: translateY(-8px) scale(1.02);
+    }
+
+    .card:hover::after { right: 120%; }
+
+    .card:active {
+      transform: scale(0.96) translateY(4px) !important;
+      box-shadow: 0 0 0 rgba(0,0,0,0), inset 0 6px 15px rgba(0,0,0,0.7) !important;
+      transition: transform 0.05s ease-out, box-shadow 0.05s ease-out !important;
+    }
+
+    .card-kick { border-left-color: rgba(83, 252, 24, 0.5); }
+    .card-kick:hover { border-color: rgba(83, 252, 24, 0.5); border-left-color: var(--kick); box-shadow: 0 26px 68px rgba(0,0,0,0.66), 0 0 38px rgba(83, 252, 24, 0.25); }
+    .card-discord:hover { border-left-color: #5865f2; box-shadow: 0 26px 68px rgba(0,0,0,0.66), 0 0 38px rgba(88, 101, 242, 0.25); }
+    .card-youtube:hover { border-left-color: #ff0033; box-shadow: 0 26px 68px rgba(0,0,0,0.66), 0 0 38px rgba(255, 0, 51, 0.2); }
+    .card-instagram:hover { border-left-color: #e1306c; box-shadow: 0 26px 68px rgba(0,0,0,0.66), 0 0 38px rgba(225, 48, 108, 0.2); }
+    .card-tiktok:hover { border-left-color: #fe2c55; box-shadow: 0 26px 68px rgba(0,0,0,0.66), 0 0 38px rgba(254, 44, 85, 0.25); }
+    .card-tip:hover { border-left-color: #0070ba; box-shadow: 0 26px 68px rgba(0,0,0,0.66), 0 0 38px rgba(0, 112, 186, 0.25); }
+
+    .card-inner {
+      position: relative;
+      z-index: 3;
+      border-radius: 12px;
+      background: linear-gradient(145deg, rgba(4, 12, 11, 0.82), rgba(8, 28, 26, 0.72));
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 22px;
+      overflow: hidden;
+    }
+
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 4;
+    }
+
+    .card-title {
+      font-size: 1.35rem;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .card-sub {
+      margin-top: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.5px;
+    }
+
+    .icon-box {
+      position: absolute;
+      right: 22px;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+      z-index: 5;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover .icon-box {
+      background: rgba(38, 217, 196, 0.12);
+      border-color: rgba(38, 217, 196, 0.35);
+      box-shadow: inset 0 0 15px rgba(38, 217, 196, 0.2);
+    }
+
+    .card-kick:hover .icon-box {
+      background: rgba(83, 252, 24, 0.12);
+      border-color: rgba(83, 252, 24, 0.35);
+      box-shadow: inset 0 0 15px rgba(83, 252, 24, 0.2);
+    }
+
+    .icon-box svg {
+      width: 26px;
+      height: 26px;
+      fill: currentColor;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .card:hover .icon-box svg {
+      transform: scale(1.18) rotate(-6deg);
+    }
+
+    .card-kick .icon-box { color: var(--kick); }
+    .card-discord .icon-box { color: #5865f2; }
+    .card-youtube .icon-box { color: #ff0033; }
+    .card-instagram .icon-box { color: #e1306c; }
+    .card-tiktok .icon-box { color: #fe2c55; }
+    .card-tiktok:hover .icon-box {
+      background: rgba(254, 44, 85, 0.12);
+      border-color: rgba(254, 44, 85, 0.35);
+      box-shadow: inset 0 0 15px rgba(254, 44, 85, 0.2);
+    }
+    .card-tip .icon-box { color: #0070ba; }
+    .card-tip:hover .icon-box {
+      background: rgba(0, 112, 186, 0.12);
+      border-color: rgba(0, 112, 186, 0.35);
+      box-shadow: inset 0 0 15px rgba(0, 112, 186, 0.2);
+    }
+
+    /* Live status */
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .status-live {
+      color: var(--kick);
+      text-shadow: 0 0 10px rgba(83, 252, 24, 0.7);
+    }
+
+    .status-live .status-dot {
+      background: var(--kick);
+      box-shadow: 0 0 12px rgba(83, 252, 24, 0.9);
+      animation: livePulse 1.2s infinite;
+    }
+
+    .status-offline { color: #9ca3af; }
+    .status-offline .status-dot { background: #6b7280; }
+
+    .status-checking { color: rgba(255,255,255,0.5); }
+    .status-checking .status-dot {
+      background: var(--accent);
+      animation: livePulse 1.2s infinite;
+    }
+
+    @keyframes livePulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.45); opacity: 0.6; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Animations */
+    .animated-item.item-animate {
+      animation: itemDropIn 0.55s cubic-bezier(.18, 1.22, .34, 1) both;
+    }
+
+    @keyframes itemDropIn {
+      0% { opacity: 0; transform: translateY(-34px) scale(0.94); }
+      65% { opacity: 1; transform: translateY(5px) scale(1.015); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* About section */
+    .view-section { display: none; animation: viewFadeIn 0.4s ease forwards; }
+    .view-section.active { display: block; }
+
+    @keyframes viewFadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .about-card {
+      background: rgba(31, 35, 48, 0.55);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 28px 24px;
+      backdrop-filter: blur(12px);
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+
+    .about-card p {
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+      font-size: 0.95rem;
+      margin: 0 0 16px;
+    }
+
+    .about-stats {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    /* Footer */
+    .site-footer {
+      margin-top: 48px;
+      padding: 24px 20px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center;
+    }
+
+    .footer-copy {
+      color: rgba(255,255,255,0.9);
+      font-size: 0.85rem;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .footer-sub {
+      margin-top: 6px;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    @media (max-width: 520px) {
+      .hero-name { font-size: 2rem; }
+      .card-inner { min-height: 72px; padding: 14px 17px; }
+      .icon-box { right: 17px; width: 44px; height: 44px; }
+      .card-title { font-size: 1.2rem; }
+      #profile-image-container { width: 124px; height: 124px; }
+      .pill-menu { gap: 0.75rem; padding: 8px 20px; }
+      .pill-btn { font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="particles-canvas"></canvas>
+  <img id="watermark-bg" src="logo.png" alt="" aria-hidden="true" />
+  <div id="spotlight"></div>
+
+  <main id="main-page-content">
+    <a id="profile-image-container" href="https://kick.com/eladoxx" target="_blank" rel="noopener noreferrer" title="Watch Eladoxx on Kick">
+      <img src="logo.png" alt="Eladoxx profile" />
+    </a>
+
+    <h1 class="hero-name">Eladoxx</h1>
+    <p class="hero-tagline">Streamer · Creator · Community</p>
+
+    <nav class="pill-menu">
+      <button class="pill-btn active" onclick="switchView('home', this)">Links</button>
+      <button class="pill-btn" onclick="switchView('about', this)">About</button>
+    </nav>
+
+    <section id="view-home" class="view-section active">
+      <div class="links-grid">
+        <a href="https://kick.com/eladoxx" target="_blank" rel="noopener noreferrer" class="card card-kick animated-item">
+          <div class="card-inner">
+            <div class="card-content">
+              <span class="card-title">Kick</span>
+              <span id="kick-live-status" class="card-sub status-checking">
+                <span class="status-dot"></span>
+                <span class="status-text">Checking...</span>
+              </span>
+            </div>
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24"><path d="M3 3h7v7H3V3zm11 0h7v7h-7V3zM3 14h7v7H3v-7zm11 0h7v7h-7v-7z"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://streamelements.com/eladoxx-966a0/tip" target="_blank" rel="noopener noreferrer" class="card card-tip animated-item">
+          <div class="card-inner">
+            <div class="card-content">
+              <span class="card-title">Tip / PayPal</span>
+              <span class="card-sub">Support the stream</span>
+            </div>
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.77.77 0 0 1 .757-.647h6.957c2.302 0 4.103.537 5.356 1.597 1.253 1.06 1.876 2.557 1.876 4.492 0 .328-.027.656-.08.984a8.763 8.763 0 0 1-.234 1.125 6.588 6.588 0 0 1-.656 1.453 5.214 5.214 0 0 1-1.031 1.172 4.403 4.403 0 0 1-1.406.797 5.093 5.093 0 0 1-1.734.281H9.844l-.656 4.148a.641.641 0 0 1-.633.549h-.48zm.89-5.672h2.25c1.078 0 1.898-.234 2.46-.703.562-.469.938-1.172 1.125-2.11.094-.469.141-.938.141-1.406 0-.656-.117-1.172-.352-1.547a1.88 1.88 0 0 0-.984-.797 4.69 4.69 0 0 0-1.453-.211H9.375l-.41 2.578z"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://discord.com/invite/49nBq6Tar" target="_blank" rel="noopener noreferrer" class="card card-discord animated-item">
+          <div class="card-inner">
+            <div class="card-content">
+              <span class="card-title">Discord</span>
+              <span class="card-sub">Join the community</span>
+            </div>
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://www.youtube.com/@Eladoxx" target="_blank" rel="noopener noreferrer" class="card card-youtube animated-item">
+          <div class="card-inner">
+            <div class="card-content">
+              <span class="card-title">YouTube</span>
+              <span class="card-sub">Videos & highlights</span>
+            </div>
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/elad_basil/" target="_blank" rel="noopener noreferrer" class="card card-instagram animated-item">
+          <div class="card-inner">
+            <div class="card-content">
+              <span class="card-title">Instagram</span>
+              <span class="card-sub">@elad_basil</span>
+            </div>
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://www.tiktok.com/@eladox4?_r=1&amp;_t=ZS-98tnI4MLkTV" target="_blank" rel="noopener noreferrer" class="card card-tiktok animated-item">
+          <div class="card-inner">
+            <div class="card-content">
+              <span class="card-title">TikTok</span>
+              <span class="card-sub">@eladox4</span>
+            </div>
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.68 6.34 6.34 0 0 0 9.33 22a6.33 6.33 0 0 0 6.33-6.33V9.05a8.16 8.16 0 0 0 4.77 1.52V7.15a4.85 4.85 0 0 1-.84-.46z"/></svg>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section id="view-about" class="view-section">
+      <div class="about-card animated-item">
+        <p>
+          Welcome to the official Eladoxx link hub. Catch live streams on Kick,
+          hang out in Discord, watch highlights on YouTube, follow daily
+          content on Instagram, and check out TikTok clips.
+        </p>
+        <div class="about-stats">
+          <div class="stat-item">
+            <div class="stat-value">6</div>
+            <div class="stat-label">Platforms</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">24/7</div>
+            <div class="stat-label">Community</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">LIVE</div>
+            <div class="stat-label">On Kick</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="footer-copy">© 2026 Eladoxx</div>
+      <div class="footer-sub">All rights reserved</div>
+    </footer>
+  </main>
+
+  <script>
+    // Particles
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particlesArray = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.speedY = (Math.random() - 0.5) * 0.4;
+        this.opacity = Math.random() * 0.5 + 0.1;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+          this.reset();
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(38, 217, 196, ${this.opacity})`;
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particlesArray = [];
+      const count = Math.min(80, Math.floor(window.innerWidth / 12));
+      for (let i = 0; i < count; i++) particlesArray.push(new Particle());
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particlesArray.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animateParticles);
+    }
+
+    resizeCanvas();
+    initParticles();
+    animateParticles();
+    window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+
+    const spotlight = document.getElementById('spotlight');
+    spotlight.style.display = 'block';
+    animateItems();
+
+    // Navigation
+    function switchView(viewName, btn) {
+      document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('view-' + viewName).classList.add('active');
+      animateItems();
+    }
+
+    function animateItems() {
+      document.querySelectorAll('.view-section.active .animated-item').forEach((item, i) => {
+        item.classList.remove('item-animate');
+        item.style.animationDelay = `${i * 90}ms`;
+        void item.offsetWidth;
+        item.classList.add('item-animate');
+      });
+    }
+
+    // Spotlight follows mouse
+    document.addEventListener('mousemove', (e) => {
+      if (!spotlight) return;
+      spotlight.style.left = e.clientX + 'px';
+      spotlight.style.top = e.clientY + 'px';
+      const x = e.clientX / Math.max(window.innerWidth, 1);
+      const y = e.clientY / Math.max(window.innerHeight, 1);
+      const teal = Math.max(0, 1 - Math.hypot(x - 0.5, y - 0.4) * 1.8);
+      const kick = Math.max(0, 1 - Math.hypot(x - 0.2, y - 0.2) * 2.2);
+      const r = Math.round(20 + kick * 60 + teal * 18);
+      const g = Math.round(180 + kick * 75 + teal * 37);
+      const b = Math.round(120 + kick * 20 + teal * 76);
+      const a = (0.12 + Math.max(teal, kick) * 0.1).toFixed(2);
+      document.documentElement.style.setProperty('--spotlight-color', `rgba(${r},${g},${b},${a})`);
+    });
+
+    // Kick live status via public proxy
+    async function checkKickLiveStatus() {
+      const el = document.getElementById('kick-live-status');
+      const textEl = el.querySelector('.status-text');
+      try {
+        const res = await fetch('https://kick.com/api/v2/channels/eladoxx', {
+          headers: { Accept: 'application/json' }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.livestream && data.livestream.is_live) {
+            el.className = 'card-sub status-live';
+            textEl.textContent = 'Live Now';
+          } else {
+            el.className = 'card-sub status-offline';
+            textEl.textContent = 'Offline';
+          }
+          return;
+        }
+      } catch (_) {}
+
+      el.className = 'card-sub status-offline';
+      textEl.textContent = 'Watch on Kick';
+    }
+
+    checkKickLiveStatus();
+    setInterval(checkKickLiveStatus, 60000);
+  </script>
+</body>
+</html>
